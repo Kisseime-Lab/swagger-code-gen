@@ -40,6 +40,26 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>io.swagger.parser.v3</groupId>
+			<artifactId>swagger-parser</artifactId>
+			<version>2.1.25</version>
+		</dependency>
+		<dependency>
+			<groupId>org.openapitools</groupId>
+			<artifactId>jackson-databind-nullable</artifactId>
+			<version>0.2.6</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springdoc</groupId>
+			<artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+			<version>2.7.0</version>
+		</dependency>
+		<dependency>
+			<groupId>javax.xml.bind</groupId>
+			<artifactId>jaxb-api</artifactId>
+			<version>2.3.1</version>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -47,6 +67,42 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+			<plugin>
+			<groupId>org.openapitools</groupId>
+			<artifactId>openapi-generator-maven-plugin</artifactId>
+			<version>7.0.1</version>
+			<executions>
+				<execution>
+				<id>generate-spring-server</id>
+				<goals>
+					<goal>generate</goal>
+				</goals>
+				<configuration>
+					<inputSpec>${project.basedir}/src/main/resources/openapi.yml</inputSpec>
+					<generatorName>spring</generatorName>
+					<output>${project.build.directory}/generated-sources/openapi</output>
+					<apiPackage>com.example.swagger_codegen_maven.api</apiPackage>
+					<modelPackage>com.example.swagger_codegen_maven.model</modelPackage>
+					<invokerPackage>com.example.swagger_codegen_maven</invokerPackage>
+					<configOptions>
+					<delegatePattern>true</delegatePattern>
+					<library>spring-boot</library>
+					<dateLibrary>java8</dateLibrary>
+					<hideGenerationTimestamp>true</hideGenerationTimestamp>
+					<serializableModel>true</serializableModel>
+					<useTags>true</useTags>
+					<useGzipFeature>true</useGzipFeature>
+					<unhandledException>true</unhandledException>
+					<useSpringBoot3>true</useSpringBoot3>
+					<useSwaggerUI>true</useSwaggerUI>
+					<interfaceOnly>true</interfaceOnly>
+					<generateSpringBootApplication>false</generateSpringBootApplication>
+					<generateSpringApplication>false</generateSpringApplication>
+					</configOptions>
+				</configuration>
+				</execution>
+			</executions>
 			</plugin>
 		</plugins>
 	</build>
